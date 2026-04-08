@@ -11,7 +11,7 @@ inputs=$(bitcoin-cli -regtest decoderawtransaction $transaction | jq -c \
 '[.vout | to_entries[] | {
   txid: "'$txid'",
   vout: .key,
-  sequence: 0
+  sequence: 4294967293
 }]')
 
 outputs='{"'$address'": 0.2}'
