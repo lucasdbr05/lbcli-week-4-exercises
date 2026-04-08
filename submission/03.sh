@@ -15,15 +15,12 @@ inputs=$(bitcoin-cli -regtest decoderawtransaction $transaction | jq -c \
 }]')
 
 
-msg_hex=$(echo -n "btrust builder 2026" | xxd -p -c 200)
+msg_hex=$(printf '%s' "btrust builder 2026" | xxd -p -c 200)
 
 outputs=$(jq -n \
 --arg addr "2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP" \
 --arg data "$msg_hex" \
-'{
-  ($addr): 0.2,
-  "data": $data
-}')
+'[{"data": $data}, {($addr): 0.2}]')
 
 
 rawtx=$(bitcoin-cli -regtest createrawtransaction "$inputs" "$outputs")
